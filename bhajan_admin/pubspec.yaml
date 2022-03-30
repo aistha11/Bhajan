@@ -36,6 +36,9 @@ dependencies:
   cupertino_icons: ^1.0.2
   get: ^4.6.1
   flutter_quill: ^4.1.0
+  equatable: ^2.0.3
+  cloud_firestore: ^3.1.10
+  firebase_core: ^1.13.1
 
 dev_dependencies:
   flutter_test:

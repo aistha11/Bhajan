@@ -1,3 +1,4 @@
+import 'package:bhajan_admin/bindings/bindings.dart';
 import 'package:bhajan_admin/views/views.dart';
 import 'package:get/get.dart';
 
@@ -14,6 +15,7 @@ class AppPages {
     GetPage(
       name: Routes.ADDBHAJAN,
       page: () => AddBhajan(),
+      binding: AddBhajanBinding()
     ),
   ];
 }
