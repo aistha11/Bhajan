@@ -100,5 +100,21 @@
       loadMainDartJs();
     }
   </script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  <script>
+    var firebaseConfig = {
+      apiKey: "AIzaSyBUeRdZSDYYVnecxZKXuTm0uyu-Z0NYF7Q",
+      authDomain: "bhajan-ai.firebaseapp.com",
+      projectId: "bhajan-ai",
+      storageBucket: "bhajan-ai.appspot.com",
+      messagingSenderId: "103886369530",
+      appId: "1:103886369530:web:5fa46bd84909cf2bb5cf43",
+      measurementId: "G-DB95X70VNJ"
+    };
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+  </script>
 </body>
 </html>

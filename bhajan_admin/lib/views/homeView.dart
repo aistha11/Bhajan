@@ -1,6 +1,7 @@
-import 'package:bhajan_admin/routes/appPages.dart';
+import 'package:bhajan_admin/views/balChorus/balChorusView.dart';
+import 'package:bhajan_admin/views/bhajan/bhajanView.dart';
+import 'package:bhajan_admin/views/chorus/chorusView.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -28,39 +29,9 @@ class HomeView extends StatelessWidget {
         ),
         body: TabBarView(
           children: [
-            Scaffold(
-              body: Center(
-                child: Text("Bhajan"),
-              ),
-              floatingActionButton: FloatingActionButton(
-                onPressed: () {
-                  Get.toNamed(Routes.ADDBHAJAN, arguments: {"cat": 1});
-                },
-                child: const Icon(Icons.add),
-              ),
-            ),
-            Scaffold(
-              body: Center(
-                child: Text("Chorus"),
-              ),
-              floatingActionButton: FloatingActionButton(
-                onPressed: () {
-                  Get.toNamed(Routes.ADDBHAJAN, arguments: {"cat": 2});
-                },
-                child: const Icon(Icons.add),
-              ),
-            ),
-            Scaffold(
-              body: Center(
-                child: Text("Bal Chorus"),
-              ),
-              floatingActionButton: FloatingActionButton(
-                onPressed: () {
-                  Get.toNamed(Routes.ADDBHAJAN, arguments: {"cat": 3});
-                },
-                child: const Icon(Icons.add),
-              ),
-            ),
+            BhajanView(),
+            ChorusView(),
+            BalChorusView(),
           ],
         ),
       ),
