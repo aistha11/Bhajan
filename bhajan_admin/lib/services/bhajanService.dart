@@ -14,7 +14,7 @@ class BhajanService {
   
   
   static Future<void> createBhajan(Bhajan bhajan) async {
-    await bhajanColsRefs.add(bhajan);
+    await bhajanColsRefs.doc(bhajan.id).set(bhajan);
   }
 
   /// Get all bhajans

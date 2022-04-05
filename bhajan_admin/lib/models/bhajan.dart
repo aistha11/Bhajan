@@ -11,6 +11,7 @@ class Bhajan extends DatabaseItem {
   Bhajan({
     this.id,
     required this.title,
+    required this.subTitle,
     required this.scale,
     required this.taal,
     required this.lyrics,
@@ -20,6 +21,7 @@ class Bhajan extends DatabaseItem {
 
   final String? id;
   final String title;
+  final String subTitle;
   final String scale;
   final String taal;
 
@@ -30,6 +32,7 @@ class Bhajan extends DatabaseItem {
   factory Bhajan.fromMap(String id, Map<String, dynamic> json) => Bhajan(
         id: id,
         title: json["title"],
+        subTitle: json["subTitle"],
         scale: json["scale"],
         taal: json["taal"],
         lyricsChords: json["lyricsChords"],
@@ -39,6 +42,7 @@ class Bhajan extends DatabaseItem {
 
   Map<String, dynamic> toMap() => {
         "title": title,
+        "subTitle": subTitle,
         "scale": scale,
         "taal": taal,
         "lyrics": lyrics,

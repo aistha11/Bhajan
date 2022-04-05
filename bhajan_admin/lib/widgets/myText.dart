@@ -6,7 +6,8 @@ class MyText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      text
+      text,
+      overflow: TextOverflow.ellipsis,
     );
   }
 }

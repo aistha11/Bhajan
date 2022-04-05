@@ -1,5 +1,7 @@
 
 
+import 'dart:developer';
+
 import 'package:bhajan_admin/models/models.dart';
 
 class Utils {
@@ -11,6 +13,18 @@ class Utils {
     } else {
       return true;
     }
+  }
+  static bool isWhiteSpace(DbQuill quill) {
+    String? insertString = quill.insert['insert'];
+    final bool result = insertString == null || insertString.trim() == '';
+    log("$insertString --> $result");
+    return result;
+  }
+  static bool isNewLineOnly(DbQuill quill) {
+    String? insertString = quill.insert['insert'];
+    final bool result = insertString == null || insertString == '\n';
+    log("$insertString --> $result");
+    return result;
   }
 
 }

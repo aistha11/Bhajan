@@ -18,4 +18,6 @@ class AppPages {
       binding: AddBhajanBinding()
     ),
   ];
+
+  static final unknownRoute = GetPage(name: '/not-found', page: ()=>NotFoundView());
 }
