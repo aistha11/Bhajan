@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "103886369530",
+    "project_id": "bhajan-ai",
+    "storage_bucket": "bhajan-ai.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:103886369530:android:df7e2de0ee0bb67ab5cf43",
+        "android_client_info": {
+          "package_name": "com.aistha.bhajan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "103886369530-jh9jgnbu950o6his5p3jlor7rkleq9qv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvD8sDsVgyfi64eqJ5bBaXz9kJDkmqAS8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "103886369530-jh9jgnbu950o6his5p3jlor7rkleq9qv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "103886369530-l005jjrqokspf5ta26buae070rja8qb3.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.aistha.bhajanAdmin"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:103886369530:android:8b0e0fc1085ed1cfb5cf43",
+        "android_client_info": {
+          "package_name": "com.aistha.bhajan_admin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "103886369530-jh9jgnbu950o6his5p3jlor7rkleq9qv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvD8sDsVgyfi64eqJ5bBaXz9kJDkmqAS8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "103886369530-jh9jgnbu950o6his5p3jlor7rkleq9qv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "103886369530-l005jjrqokspf5ta26buae070rja8qb3.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.aistha.bhajanAdmin"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
