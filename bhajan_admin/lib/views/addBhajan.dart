@@ -76,7 +76,7 @@ class AddBhajan extends GetView<AddBhajanController> {
                 onFieldSubmitted: (val) {
                   // controller.name.value.text = val;
                 },
-                maxLength: 60,
+                // maxLength: 60,
                 decoration: InputDecoration(
                   hintText: "Enter Title",
                   border: OutlineInputBorder(),
@@ -98,7 +98,7 @@ class AddBhajan extends GetView<AddBhajanController> {
                 onFieldSubmitted: (val) {
                   // controller.name.value.text = val;
                 },
-                maxLength: 60,
+                // maxLength: 60,
                 decoration: InputDecoration(
                   hintText: "Enter Title in English",
                   border: OutlineInputBorder(),
@@ -125,7 +125,7 @@ class AddBhajan extends GetView<AddBhajanController> {
                       onFieldSubmitted: (val) {
                         // controller.name.value.text = val;
                       },
-                      maxLength: 5,
+                      // maxLength: 5,
                       decoration: InputDecoration(
                         hintText: "Enter Scale",
                         border: OutlineInputBorder(),
@@ -150,7 +150,7 @@ class AddBhajan extends GetView<AddBhajanController> {
                       onFieldSubmitted: (val) {
                         // controller.name.value.text = val;
                       },
-                      maxLength: 5,
+                      // maxLength: 5,
                       decoration: InputDecoration(
                         hintText: "Enter Taal",
                         border: OutlineInputBorder(),
