@@ -43,6 +43,7 @@ class BhajanController extends GetxController {
     }
     Bhajan upBhajan = Bhajan(
       id: bhajan.id,
+      uid: int.parse(bhajan.id!),
       title: bhajan.title,
       subTitle: bhajan.subTitle,
       scale: bhajan.scale,

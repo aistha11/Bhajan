@@ -10,6 +10,7 @@ String bhajanToMap(Bhajan data) => json.encode(data.toMap());
 class Bhajan extends DatabaseItem {
   Bhajan({
     this.id,
+    this.uid,
     required this.title,
     required this.subTitle,
     required this.scale,
@@ -24,6 +25,7 @@ class Bhajan extends DatabaseItem {
   final String subTitle;
   final String scale;
   final String taal;
+  final int? uid;
 
   final String lyrics;
   final String lyricsChords;
@@ -31,6 +33,7 @@ class Bhajan extends DatabaseItem {
 
   factory Bhajan.fromMap(String id, Map<String, dynamic> json) => Bhajan(
         id: id,
+        uid: json["uid"],
         title: json["title"],
         subTitle: json["subTitle"],
         scale: json["scale"],
@@ -41,6 +44,8 @@ class Bhajan extends DatabaseItem {
       );
 
   Map<String, dynamic> toMap() => {
+        "id": id,
+        "uid": uid,
         "title": title,
         "subTitle": subTitle,
         "scale": scale,

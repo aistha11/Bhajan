@@ -30,6 +30,7 @@ class AddBhajanController extends GetxController {
     if (bhajanFormKey.value.currentState!.validate()) {
       Bhajan bhajan = Bhajan(
         id: length.toString(),
+        uid: length,
         title: title.text,
         subTitle: subTitle.text,
         scale: scale.text,

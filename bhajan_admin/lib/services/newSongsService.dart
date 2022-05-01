@@ -20,7 +20,7 @@ class NewSongsService {
   /// Get all bhajans
   static Stream<List<Bhajan>> getBhajans() {
     final refProducts =
-        newSongsColsRefs.snapshots();
+        newSongsColsRefs.orderBy("uid").snapshots();
     return refProducts.map((list) {
       return list.docs.map((doc) => doc.data()).toList();
     });
