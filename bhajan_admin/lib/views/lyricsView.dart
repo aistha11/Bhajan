@@ -21,12 +21,20 @@ class _LyricsViewState extends State<LyricsView> {
   bool showChord = true;
   QuillController _chordLyricsController = QuillController.basic();
   QuillController _lyricsController = QuillController.basic();
+  QuillController _chordLyricsEngController = QuillController.basic();
+  QuillController _lyricsEngController = QuillController.basic();
   bool readOnly = false;
   @override
   void initState() {
     super.initState();
     _loadChordLyrics(widget.bhajan.lyricsChords);
     _loadLyrics(widget.bhajan.lyrics);
+    if (widget.bhajan.lyricsChordsEng != null) {
+      _loadChordEngLyrics(widget.bhajan.lyricsChordsEng!);
+    }
+    if (widget.bhajan.lyricsEng != null) {
+      _loadEngLyrics(widget.bhajan.lyricsEng!);
+    }
   }
 
   Future<void> _loadChordLyrics(String strResult) async {
@@ -37,10 +45,26 @@ class _LyricsViewState extends State<LyricsView> {
     });
   }
 
+  Future<void> _loadChordEngLyrics(String strResult) async {
+    final doc = Document.fromJson(jsonDecode(strResult));
+    setState(() {
+      _chordLyricsEngController = QuillController(
+          document: doc, selection: const TextSelection.collapsed(offset: 0));
+    });
+  }
+
   Future<void> _loadLyrics(String strResult) async {
     final doc = Document.fromJson(jsonDecode(strResult));
     setState(() {
       _lyricsController = QuillController(
+          document: doc, selection: const TextSelection.collapsed(offset: 0));
+    });
+  }
+
+  Future<void> _loadEngLyrics(String strResult) async {
+    final doc = Document.fromJson(jsonDecode(strResult));
+    setState(() {
+      _lyricsEngController = QuillController(
           document: doc, selection: const TextSelection.collapsed(offset: 0));
     });
   }
@@ -74,6 +98,8 @@ class _LyricsViewState extends State<LyricsView> {
               Get.find<BhajanController>().updateBhajan(
                 chordLyricsController: _chordLyricsController,
                 lyricsController: _lyricsController,
+                chordLyricsEngController: _chordLyricsEngController,
+                lyricsEngController: _lyricsEngController,
                 bhajan: widget.bhajan,
                 catId: widget.catId,
               );

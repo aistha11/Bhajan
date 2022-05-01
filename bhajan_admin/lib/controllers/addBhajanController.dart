@@ -9,19 +9,27 @@ import 'package:get/get.dart';
 
 class AddBhajanController extends GetxController {
   final QuillController lyricsController = QuillController.basic();
+  final QuillController lyricsEngController = QuillController.basic();
   final QuillController chordLyricsController = QuillController.basic();
+  final QuillController chordLyricsEngController = QuillController.basic();
   final TextEditingController title = TextEditingController();
   final TextEditingController subTitle = TextEditingController();
   final TextEditingController scale = TextEditingController();
   final TextEditingController taal = TextEditingController();
+  final TextEditingController videoUrl = TextEditingController();
+  final TextEditingController tutorialUrl = TextEditingController();
 
   var bhajanFormKey = GlobalKey<FormState>().obs;
 
   Future<void> save(String cat, int length) async {
     var lyricsChordsJson = chordLyricsController.document.toDelta().toJson();
     var lyricsOnlyJson = lyricsController.document.toDelta().toJson();
+    var lyricsChordsEngJson = chordLyricsEngController.document.toDelta().toJson();
+    var lyricsOnlyEngJson = lyricsEngController.document.toDelta().toJson();
     String lyricsOnly = jsonEncode(lyricsOnlyJson);
     String lyricsChords = jsonEncode(lyricsChordsJson);
+    String lyricsEngOnly = jsonEncode(lyricsOnlyEngJson);
+    String lyricsEngChords = jsonEncode(lyricsChordsEngJson);
     if (lyricsOnly.isEmpty || lyricsChords.isEmpty) {
       Get.snackbar("Error!!!", "Something is missing. Correct the Editor");
       return;
@@ -33,10 +41,14 @@ class AddBhajanController extends GetxController {
         uid: length,
         title: title.text,
         subTitle: subTitle.text,
+        videoUrl: videoUrl.text,
+        tutorialUrl: tutorialUrl.text,
         scale: scale.text,
         taal: taal.text,
         lyrics: lyricsOnly,
+        lyricsEng: lyricsEngOnly,
         lyricsChords: lyricsChords,
+        lyricsChordsEng: lyricsEngChords,
         updateDate: DateTime.now(),
       );
 
@@ -79,7 +91,11 @@ class AddBhajanController extends GetxController {
     subTitle.text = "";
     scale.text = "";
     taal.text = "";
+    videoUrl.text = "";
+    tutorialUrl.text = "";
     chordLyricsController.dispose();
+    chordLyricsEngController.dispose();
     lyricsController.dispose();
+    lyricsEngController.dispose();
   }
 }

@@ -28,15 +28,22 @@ class BhajanController extends GetxController {
   //   }
   // }
 
-  Future<void> updateBhajan(
-      {required QuillController lyricsController,
-      required QuillController chordLyricsController,
-      required Bhajan bhajan,
-      required String catId}) async {
+  Future<void> updateBhajan({
+    required QuillController lyricsController,
+    required QuillController chordLyricsController,
+    required QuillController lyricsEngController,
+    required QuillController chordLyricsEngController,
+    required Bhajan bhajan,
+    required String catId,
+  }) async {
     var lyricsChordsJson = chordLyricsController.document.toDelta().toJson();
     var lyricsOnlyJson = lyricsController.document.toDelta().toJson();
+    var lyricsChordsEngJson = chordLyricsEngController.document.toDelta().toJson();
+    var lyricsOnlyEngJson = lyricsEngController.document.toDelta().toJson();
     String lyricsOnly = jsonEncode(lyricsOnlyJson);
     String lyricsChords = jsonEncode(lyricsChordsJson);
+    String lyricsEngOnly = jsonEncode(lyricsOnlyEngJson);
+    String lyricsChordsEng = jsonEncode(lyricsChordsEngJson);
     if (lyricsOnly.isEmpty || lyricsChords.isEmpty) {
       Get.snackbar("Error!!!", "Something is missing. Correct the Editor");
       return;
@@ -49,27 +56,31 @@ class BhajanController extends GetxController {
       scale: bhajan.scale,
       taal: bhajan.taal,
       lyrics: lyricsOnly,
+      lyricsEng: lyricsEngOnly,
+      videoUrl: bhajan.videoUrl,
+      tutorialUrl: bhajan.tutorialUrl,
       lyricsChords: lyricsChords,
+      lyricsChordsEng: lyricsChordsEng,
       updateDate: DateTime.now(),
     );
     try {
       if (catId == "1") {
-         BhajanService.updateBhajan(upBhajan).then((value){
+        BhajanService.updateBhajan(upBhajan).then((value) {
           Get.snackbar("Hurray!!", "Bhajan Edited Successfully");
         });
       }
       if (catId == "2") {
-         ChorusService.updateBhajan(upBhajan).then((value){
+        ChorusService.updateBhajan(upBhajan).then((value) {
           Get.snackbar("Hurray!!", "Chorus Edited Successfully");
         });
       }
       if (catId == "3") {
-         BalChorusService.updateBhajan(upBhajan).then((value){
+        BalChorusService.updateBhajan(upBhajan).then((value) {
           Get.snackbar("Hurray!!", "Bal-Chorus Edited Successfully");
         });
       }
       if (catId == "4") {
-         NewSongsService.updateBhajan(upBhajan).then((value){
+        NewSongsService.updateBhajan(upBhajan).then((value) {
           Get.snackbar("Hurray!!", "New Song Edited Successfully");
         });
       }
@@ -80,24 +91,24 @@ class BhajanController extends GetxController {
     Get.back();
   }
 
-  Future<void> delete(String catId, String bhajanId) async{
+  Future<void> delete(String catId, String bhajanId) async {
     if (catId == "1") {
-       BhajanService.deleteBhajan(bhajanId).then((value){
+      BhajanService.deleteBhajan(bhajanId).then((value) {
         Get.snackbar("Success", "Bhajan Deleted Successfully");
       });
     }
     if (catId == "2") {
-       ChorusService.deleteBhajan(bhajanId).then((value){
+      ChorusService.deleteBhajan(bhajanId).then((value) {
         Get.snackbar("Success", "Chorus Deleted Successfully");
       });
     }
     if (catId == "3") {
-       BalChorusService.deleteBhajan(bhajanId).then((value){
+      BalChorusService.deleteBhajan(bhajanId).then((value) {
         Get.snackbar("Success", "Bal-Chorus Deleted Successfully");
       });
     }
     if (catId == "4") {
-       NewSongsService.deleteBhajan(bhajanId).then((value){
+      NewSongsService.deleteBhajan(bhajanId).then((value) {
         Get.snackbar("Success", "New Song Deleted Successfully");
       });
     }

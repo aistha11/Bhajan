@@ -1,7 +1,7 @@
 import 'package:badges/badges.dart';
 import 'package:bhajan_admin/controllers/controllers.dart';
 import 'package:bhajan_admin/models/models.dart';
-import 'package:bhajan_admin/views/lyricsView.dart';
+import 'package:bhajan_admin/views/editBhajan.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -28,8 +28,8 @@ class NewSongsView extends StatelessWidget {
                 subtitle: Text("${bhajan.subTitle}\nScale: ${bhajan.scale}, Taal: ${bhajan.taal}",overflow: TextOverflow.ellipsis,),
                 isThreeLine: true,
                 onTap: () {
-                  Get.to(() => LyricsView(
-                        catId: '4',
+                  Get.to(() => EditBhajan(
+                        cat: '4',
                         bhajan: bhajan,
                       ));
                 },

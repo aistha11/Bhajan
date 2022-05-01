@@ -1,7 +1,7 @@
 import 'package:badges/badges.dart';
 import 'package:bhajan_admin/controllers/controllers.dart';
 import 'package:bhajan_admin/models/bhajan.dart';
-import 'package:bhajan_admin/views/lyricsView.dart';
+import 'package:bhajan_admin/views/editBhajan.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -34,8 +34,8 @@ class BhajanView extends StatelessWidget {
                 ),
                 isThreeLine: true,
                 onTap: () {
-                  Get.to(() => LyricsView(
-                        catId: '1',
+                  Get.to(() => EditBhajan(
+                        cat: '1',
                         bhajan: bhajan,
                       ));
                 },

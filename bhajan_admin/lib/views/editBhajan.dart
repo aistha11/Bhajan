@@ -1,27 +1,103 @@
-import 'package:bhajan_admin/controllers/controllers.dart';
+import 'dart:convert';
+
+import 'package:bhajan_admin/controllers/bhajanController.dart';
+import 'package:bhajan_admin/models/bhajan.dart';
 import 'package:bhajan_admin/widgets/quillEditorColumn.dart';
 import 'package:bhajan_admin/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_quill/flutter_quill.dart';
 import 'package:get/get.dart';
 
-class AddBhajan extends GetView<AddBhajanController> {
-  AddBhajan({Key? key}) : super(key: key);
+class EditBhajan extends StatefulWidget {
+  const EditBhajan({
+    Key? key,
+    required this.bhajan,
+    required this.cat,
+  }) : super(key: key);
 
-  final String cat = Get.parameters["catId"]!;
-  final String length = Get.parameters["length"]!;
+  final Bhajan bhajan;
+  final String cat;
+
+  @override
+  State<EditBhajan> createState() => _EditBhajanState();
+}
+
+class _EditBhajanState extends State<EditBhajan> {
+  QuillController _chordLyricsController = QuillController.basic();
+  QuillController _lyricsController = QuillController.basic();
+  QuillController _chordLyricsEngController = QuillController.basic();
+  QuillController _lyricsEngController = QuillController.basic();
+
+  final TextEditingController title = TextEditingController();
+  final TextEditingController subTitle = TextEditingController();
+  final TextEditingController scale = TextEditingController();
+  final TextEditingController taal = TextEditingController();
+  final TextEditingController videoUrl = TextEditingController();
+  final TextEditingController tutorialUrl = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    title.text = widget.bhajan.title;
+    subTitle.text = widget.bhajan.subTitle;
+    scale.text = widget.bhajan.scale;
+    taal.text = widget.bhajan.taal;
+    videoUrl.text = widget.bhajan.videoUrl ?? "";
+    tutorialUrl.text = widget.bhajan.tutorialUrl ?? "";
+    _loadChordLyrics(widget.bhajan.lyricsChords);
+    _loadLyrics(widget.bhajan.lyrics);
+    if (widget.bhajan.lyricsChordsEng != null) {
+      _loadChordEngLyrics(widget.bhajan.lyricsChordsEng!);
+    }
+    if (widget.bhajan.lyricsEng != null) {
+      _loadEngLyrics(widget.bhajan.lyricsEng!);
+    }
+  }
+
+  Future<void> _loadChordLyrics(String strResult) async {
+    final doc = Document.fromJson(jsonDecode(strResult));
+    setState(() {
+      _chordLyricsController = QuillController(
+          document: doc, selection: const TextSelection.collapsed(offset: 0));
+    });
+  }
+
+  Future<void> _loadChordEngLyrics(String strResult) async {
+    final doc = Document.fromJson(jsonDecode(strResult));
+    setState(() {
+      _chordLyricsEngController = QuillController(
+          document: doc, selection: const TextSelection.collapsed(offset: 0));
+    });
+  }
+
+  Future<void> _loadLyrics(String strResult) async {
+    final doc = Document.fromJson(jsonDecode(strResult));
+    setState(() {
+      _lyricsController = QuillController(
+          document: doc, selection: const TextSelection.collapsed(offset: 0));
+    });
+  }
+
+  Future<void> _loadEngLyrics(String strResult) async {
+    final doc = Document.fromJson(jsonDecode(strResult));
+    setState(() {
+      _lyricsEngController = QuillController(
+          document: doc, selection: const TextSelection.collapsed(offset: 0));
+    });
+  }
 
   String getAppTitle(String n) {
     switch (n) {
       case '1':
-        return "Add Bhajan";
+        return "Edit Bhajan";
       case '2':
-        return "Add Chorus";
+        return "Edit Chorus";
       case '3':
-        return "Add Bal Chorus";
+        return "Edit Bal Chorus";
       case '4':
-        return "Add New Songs";
+        return "Edit New Songs";
       default:
-        return "Add Bhajan";
+        return "Edit Bhajan";
     }
   }
 
@@ -30,8 +106,8 @@ class AddBhajan extends GetView<AddBhajanController> {
     return Scaffold(
       appBar: AppBar(
         title: RichText(
-          text:
-              TextSpan(text: getAppTitle(cat), style: TextStyle(fontSize: 22)),
+          text: TextSpan(
+              text: getAppTitle(widget.cat), style: TextStyle(fontSize: 22)),
         ),
         leading: IconButton(
           icon: Icon(Icons.adaptive.arrow_back),
@@ -41,24 +117,48 @@ class AddBhajan extends GetView<AddBhajanController> {
         ),
         actions: [
           IconButton(
+            onPressed: () {
+              Get.defaultDialog(
+                  title: "Warning",
+                  content: MyText(
+                    text: "Do you really want to delete this Bhajan?",
+                  ),
+                  textConfirm: "Yes",
+                  onConfirm: () {
+                    Get.find<BhajanController>()
+                        .delete(widget.cat, widget.bhajan.id!);
+                    Get.back();
+                    Get.back();
+                  },
+                  textCancel: "No",
+                  onCancel: () {
+                    Get.back();
+                  });
+            },
+            icon: Icon(Icons.delete),
+          ),
+          SizedBox(
+            width: 25,
+          ),
+          IconButton(
             icon: Icon(Icons.done),
             onPressed: () {
-              int? len = int.tryParse(length);
-              if (len == null) {
-                Get.snackbar("Sorry",
-                    "Can't add at the moment fix the id of new bhajan.");
-                return;
-              }
-              controller.save(cat, len);
+              Get.find<BhajanController>().updateBhajan(
+                chordLyricsController: _chordLyricsController,
+                lyricsController: _lyricsController,
+                chordLyricsEngController: _chordLyricsEngController,
+                lyricsEngController: _lyricsEngController,
+                bhajan: widget.bhajan,
+                catId: widget.cat,
+              );
             },
           ),
           SizedBox(
-            width: 15,
+            width: 25,
           )
         ],
       ),
       body: Form(
-        key: controller.bhajanFormKey.value,
         child: Row(
           children: [
             SizedBox(
@@ -71,7 +171,7 @@ class AddBhajan extends GetView<AddBhajanController> {
                   CustomTFF(
                     title: "Title",
                     field: TextFormField(
-                      controller: controller.title,
+                      controller: title,
                       validator: (val) {
                         if (val == "") {
                           return "Enter Title:*";
@@ -93,7 +193,7 @@ class AddBhajan extends GetView<AddBhajanController> {
                   CustomTFF(
                     title: "Subtitle",
                     field: TextFormField(
-                      controller: controller.subTitle,
+                      controller: subTitle,
                       validator: (val) {
                         if (val == "") {
                           return "Enter Title in English:*";
@@ -120,7 +220,7 @@ class AddBhajan extends GetView<AddBhajanController> {
                         field: SizedBox(
                           width: 120,
                           child: TextFormField(
-                            controller: controller.scale,
+                            controller: scale,
                             validator: (val) {
                               if (val == "") {
                                 return "Enter Scale:*";
@@ -145,7 +245,7 @@ class AddBhajan extends GetView<AddBhajanController> {
                         field: SizedBox(
                           width: 120,
                           child: TextFormField(
-                            controller: controller.taal,
+                            controller: taal,
                             validator: (val) {
                               if (val == "") {
                                 return "Enter Taal:*";
@@ -173,7 +273,7 @@ class AddBhajan extends GetView<AddBhajanController> {
                   CustomTFF(
                     title: "Video Url",
                     field: TextFormField(
-                      controller: controller.videoUrl,
+                      controller: videoUrl,
                       decoration: InputDecoration(
                         hintText: "Enter Video Url",
                         border: OutlineInputBorder(),
@@ -185,7 +285,7 @@ class AddBhajan extends GetView<AddBhajanController> {
                   CustomTFF(
                     title: "Tutorial Url",
                     field: TextFormField(
-                      controller: controller.tutorialUrl,
+                      controller: tutorialUrl,
                       decoration: InputDecoration(
                         hintText: "Enter Tutorial Url",
                         border: OutlineInputBorder(),
@@ -246,12 +346,12 @@ class AddBhajan extends GetView<AddBhajanController> {
                                         child: TabBarView(
                                           children: [
                                             QuillEditorColumn(
-                                              controller: controller
-                                                  .chordLyricsEngController,
+                                              controller:
+                                                  _chordLyricsEngController,
                                             ),
                                             QuillEditorColumn(
-                                              controller: controller
-                                                  .chordLyricsController,
+                                              controller:
+                                                  _chordLyricsController,
                                             ),
                                           ],
                                         ),
@@ -282,12 +382,10 @@ class AddBhajan extends GetView<AddBhajanController> {
                                         child: TabBarView(
                                           children: [
                                             QuillEditorColumn(
-                                              controller: controller
-                                                  .lyricsEngController,
+                                              controller: _lyricsEngController,
                                             ),
                                             QuillEditorColumn(
-                                              controller: controller
-                                                  .lyricsController,
+                                              controller: _lyricsController,
                                             ),
                                           ],
                                         ),
@@ -311,5 +409,3 @@ class AddBhajan extends GetView<AddBhajanController> {
     );
   }
 }
-
-
