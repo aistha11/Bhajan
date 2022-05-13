@@ -29,40 +29,40 @@ class BhajanController extends GetxController {
   // }
 
   Future<void> updateBhajan({
-    required QuillController lyricsController,
-    required QuillController chordLyricsController,
-    required QuillController lyricsEngController,
-    required QuillController chordLyricsEngController,
-    required Bhajan bhajan,
+    // required QuillController lyricsController,
+    // required QuillController chordLyricsController,
+    // required QuillController lyricsEngController,
+    // required QuillController chordLyricsEngController,
+    required Bhajan upBhajan,
     required String catId,
   }) async {
-    var lyricsChordsJson = chordLyricsController.document.toDelta().toJson();
-    var lyricsOnlyJson = lyricsController.document.toDelta().toJson();
-    var lyricsChordsEngJson = chordLyricsEngController.document.toDelta().toJson();
-    var lyricsOnlyEngJson = lyricsEngController.document.toDelta().toJson();
-    String lyricsOnly = jsonEncode(lyricsOnlyJson);
-    String lyricsChords = jsonEncode(lyricsChordsJson);
-    String lyricsEngOnly = jsonEncode(lyricsOnlyEngJson);
-    String lyricsChordsEng = jsonEncode(lyricsChordsEngJson);
-    if (lyricsOnly.isEmpty || lyricsChords.isEmpty) {
-      Get.snackbar("Error!!!", "Something is missing. Correct the Editor");
-      return;
-    }
-    Bhajan upBhajan = Bhajan(
-      id: bhajan.id,
-      uid: int.parse(bhajan.id!),
-      title: bhajan.title,
-      subTitle: bhajan.subTitle,
-      scale: bhajan.scale,
-      taal: bhajan.taal,
-      lyrics: lyricsOnly,
-      lyricsEng: lyricsEngOnly,
-      videoUrl: bhajan.videoUrl,
-      tutorialUrl: bhajan.tutorialUrl,
-      lyricsChords: lyricsChords,
-      lyricsChordsEng: lyricsChordsEng,
-      updateDate: DateTime.now(),
-    );
+    // var lyricsChordsJson = chordLyricsController.document.toDelta().toJson();
+    // var lyricsOnlyJson = lyricsController.document.toDelta().toJson();
+    // var lyricsChordsEngJson = chordLyricsEngController.document.toDelta().toJson();
+    // var lyricsOnlyEngJson = lyricsEngController.document.toDelta().toJson();
+    // String lyricsOnly = jsonEncode(lyricsOnlyJson);
+    // String lyricsChords = jsonEncode(lyricsChordsJson);
+    // String lyricsEngOnly = jsonEncode(lyricsOnlyEngJson);
+    // String lyricsChordsEng = jsonEncode(lyricsChordsEngJson);
+    // if (lyricsOnly.isEmpty || lyricsChords.isEmpty) {
+    //   Get.snackbar("Error!!!", "Something is missing. Correct the Editor");
+    //   return;
+    // }
+    // Bhajan upBhajan = Bhajan(
+    //   id: bhajan.id,
+    //   uid: int.parse(bhajan.id!),
+    //   title: bhajan.title,
+    //   subTitle: bhajan.subTitle,
+    //   scale: bhajan.scale,
+    //   taal: bhajan.taal,
+    //   lyrics: lyricsOnly,
+    //   lyricsEng: lyricsEngOnly,
+    //   videoUrl: bhajan.videoUrl,
+    //   tutorialUrl: bhajan.tutorialUrl,
+    //   lyricsChords: lyricsChords,
+    //   lyricsChordsEng: lyricsChordsEng,
+    //   updateDate: DateTime.now(),
+    // );
     try {
       if (catId == "1") {
         BhajanService.updateBhajan(upBhajan).then((value) {

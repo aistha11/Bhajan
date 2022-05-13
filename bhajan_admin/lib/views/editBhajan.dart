@@ -143,12 +143,46 @@ class _EditBhajanState extends State<EditBhajan> {
           IconButton(
             icon: Icon(Icons.done),
             onPressed: () {
+              var lyricsChordsJson =
+                  _chordLyricsController.document.toDelta().toJson();
+              var lyricsOnlyJson =
+                  _lyricsController.document.toDelta().toJson();
+              var lyricsChordsEngJson =
+                  _chordLyricsEngController.document.toDelta().toJson();
+              var lyricsOnlyEngJson =
+                  _lyricsEngController.document.toDelta().toJson();
+              String lyricsOnly = jsonEncode(lyricsOnlyJson);
+              String lyricsChords = jsonEncode(lyricsChordsJson);
+              String lyricsEngOnly = jsonEncode(lyricsOnlyEngJson);
+              String lyricsChordsEng = jsonEncode(lyricsChordsEngJson);
+              if (lyricsOnly.isEmpty || lyricsChords.isEmpty) {
+                Get.snackbar(
+                    "Error!!!", "Something is missing. Correct the Editor");
+                return;
+              }
+
+              Bhajan upBhajan = Bhajan(
+                id: widget.bhajan.id,
+                uid: int.parse(widget.bhajan.id!),
+                title: title.text,
+                subTitle: subTitle.text,
+                scale: scale.text,
+                taal: taal.text,
+                lyrics: lyricsOnly,
+                lyricsEng: lyricsEngOnly,
+                videoUrl: videoUrl.text,
+                tutorialUrl: tutorialUrl.text,
+                lyricsChords: lyricsChords,
+                lyricsChordsEng: lyricsChordsEng,
+                updateDate: DateTime.now(),
+              );
+
               Get.find<BhajanController>().updateBhajan(
-                chordLyricsController: _chordLyricsController,
-                lyricsController: _lyricsController,
-                chordLyricsEngController: _chordLyricsEngController,
-                lyricsEngController: _lyricsEngController,
-                bhajan: widget.bhajan,
+                // chordLyricsController: _chordLyricsController,
+                // lyricsController: _lyricsController,
+                // chordLyricsEngController: _chordLyricsEngController,
+                // lyricsEngController: _lyricsEngController,
+                upBhajan: upBhajan,
                 catId: widget.cat,
               );
             },
