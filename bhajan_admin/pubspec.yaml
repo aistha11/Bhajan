@@ -41,6 +41,7 @@ dependencies:
   firebase_core: ^1.13.1
   url_strategy: ^0.2.0
   badges: ^2.0.2
+  firebase_auth: ^3.3.18
 
 dev_dependencies:
   flutter_test:
