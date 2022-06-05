@@ -1,5 +1,5 @@
 import 'package:bhajan_admin/bindings/bindings.dart';
-import 'package:bhajan_admin/bindings/initialBinding.dart';
+// import 'package:bhajan_admin/bindings/initialBinding.dart';
 import 'package:bhajan_admin/views/views.dart';
 import 'package:bhajan_admin/views/wrapper.dart';
 import 'package:get/get.dart';
@@ -13,7 +13,7 @@ class AppPages {
     GetPage(
       name: Routes.HOME,
       page: () => Wrapper(),
-      binding: InitialBinding(),
+      // binding: InitialBinding(),
     ),
     GetPage(
       name: Routes.ADDBHAJAN,

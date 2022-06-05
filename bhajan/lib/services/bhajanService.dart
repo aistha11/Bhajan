@@ -11,8 +11,8 @@ class BhajanService {
 
   /// Get all bhajans
   static Stream<List<Bhajan>> getBhajans() {
-    final refProducts = bhajanColsRefs.snapshots();
-    return refProducts.map((list) {
+    final refBhajans = bhajanColsRefs.orderBy("uid").snapshots();
+    return refBhajans.map((list) {
       return list.docs.map((doc) => doc.data()).toList();
     });
   }

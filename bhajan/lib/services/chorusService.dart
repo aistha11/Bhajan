@@ -12,7 +12,7 @@ class ChorusService {
 
   /// Get all bhajans
   static Stream<List<Bhajan>> getBhajans() {
-    final refProducts = chorusColsRefs.snapshots();
+    final refProducts = chorusColsRefs.orderBy("uid").snapshots();
     return refProducts.map((list) {
       return list.docs.map((doc) => doc.data()).toList();
     });

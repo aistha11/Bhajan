@@ -1,32 +1,44 @@
 import 'dart:convert';
 
-
-import 'package:bhajan/controllers/bhajanController.dart';
 import 'package:bhajan/models/models.dart';
+import 'package:bhajan/widgets/customBtSht.dart';
 import 'package:bhajan/widgets/myText.dart';
+import 'package:bhajan/widgets/quillLyrics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:get/get.dart';
 
 class LyricsView extends StatefulWidget {
-  const LyricsView({Key? key, required this.bhajan, required this.catId})
-      : super(key: key);
+  const LyricsView({
+    Key? key,
+    required this.bhajan,
+    // required this.catId,
+  }) : super(key: key);
   final Bhajan bhajan;
-  final String catId;
+  // final String catId;
   @override
   State<LyricsView> createState() => _LyricsViewState();
 }
 
 class _LyricsViewState extends State<LyricsView> {
   bool showChord = true;
+  bool showEng = false;
   QuillController _chordLyricsController = QuillController.basic();
   QuillController _lyricsController = QuillController.basic();
-  bool readOnly = true;
+  QuillController _chordLyricsEngController = QuillController.basic();
+  QuillController _lyricsEngController = QuillController.basic();
+
   @override
   void initState() {
     super.initState();
     _loadChordLyrics(widget.bhajan.lyricsChords);
     _loadLyrics(widget.bhajan.lyrics);
+    if (widget.bhajan.lyricsChordsEng != null) {
+      _loadChordLyricsEng(widget.bhajan.lyricsChordsEng!);
+    }
+    if (widget.bhajan.lyricsEng != null) {
+      _loadLyricsEng(widget.bhajan.lyricsEng!);
+    }
   }
 
   Future<void> _loadChordLyrics(String strResult) async {
@@ -45,9 +57,31 @@ class _LyricsViewState extends State<LyricsView> {
     });
   }
 
-  void toggle(bool val) {
+  Future<void> _loadChordLyricsEng(String strResult) async {
+    final doc = Document.fromJson(jsonDecode(strResult));
+    setState(() {
+      _chordLyricsEngController = QuillController(
+          document: doc, selection: const TextSelection.collapsed(offset: 0));
+    });
+  }
+
+  Future<void> _loadLyricsEng(String strResult) async {
+    final doc = Document.fromJson(jsonDecode(strResult));
+    setState(() {
+      _lyricsEngController = QuillController(
+          document: doc, selection: const TextSelection.collapsed(offset: 0));
+    });
+  }
+
+  void toggleShowChord(bool val) {
     setState(() {
       showChord = val;
+    });
+  }
+
+  void toggleShowEng(bool val) {
+    setState(() {
+      showEng = val;
     });
   }
 
@@ -57,19 +91,20 @@ class _LyricsViewState extends State<LyricsView> {
       appBar: AppBar(
         title: MyText(text: widget.bhajan.title),
         actions: [
-          Center(
-              child: MyText(
-            text: !showChord ? "Show Chord" : "Hide Chord",
-          )),
-          Checkbox(
-              value: showChord,
-              onChanged: (val) {
-                toggle(val!);
-              }),
+          IconButton(
+            onPressed: () {
+              Get.bottomSheet(CustomBtSht(
+                showChord: showChord,
+                toggleShowChord: toggleShowChord,
+                showEng: showEng,
+                toggleShowEng: toggleShowEng,
+              ));
+            },
+            icon: Icon(Icons.more_vert),
+          ),
           SizedBox(
             width: 15,
           ),
-          
         ],
       ),
       body: Column(
@@ -110,72 +145,23 @@ class _LyricsViewState extends State<LyricsView> {
               ],
             ),
           ),
-          // showChord ? QuillToolbar.basic(
-          //   controller: _chordLyricsController,
-          //   showStrikeThrough: false,
-          //   showCameraButton: false,
-          //   showCodeBlock: false,
-          //   showDirection: false,
-          //   showImageButton: false,
-          //   showLink: false,
-          //   showInlineCode: false,
-          //   showIndent: false,
-          //   showListBullets: false,
-          //   showListCheck: false,
-          //   showListNumbers: false,
-          //   showQuote: false,
-          //   showVideoButton: false,
-          //   showClearFormat: false,
-          //   showAlignmentButtons: true,
-          //   showCenterAlignment: true,
-          //   showBackgroundColorButton: false,
-          //   showSmallButton: false,
-          // ):QuillToolbar.basic(
-          //   controller: _lyricsController,
-          //   showStrikeThrough: false,
-          //   showCameraButton: false,
-          //   showCodeBlock: false,
-          //   showDirection: false,
-          //   showImageButton: false,
-          //   showLink: false,
-          //   showInlineCode: false,
-          //   showIndent: false,
-          //   showListBullets: false,
-          //   showListCheck: false,
-          //   showListNumbers: false,
-          //   showQuote: false,
-          //   showVideoButton: false,
-          //   showClearFormat: false,
-          //   showAlignmentButtons: true,
-          //   showCenterAlignment: true,
-          //   showBackgroundColorButton: false,
-          //   showSmallButton: false,
-          // ),
           Expanded(
-            child: showChord
-                ? QuillEditor(
-                    controller: _chordLyricsController,
-                    readOnly: readOnly,
-                    scrollController: ScrollController(),
-                    scrollable: true,
-                    focusNode: FocusNode(canRequestFocus: false),
-                    autoFocus: true,
-                    expands: false,
-                    padding: EdgeInsets.all(20),
-                  )
-                : QuillEditor(
-                    controller: _lyricsController,
-                    readOnly: readOnly,
-                    scrollController: ScrollController(),
-                    scrollable: true,
-                    focusNode: FocusNode(canRequestFocus: false),
-                    autoFocus: true,
-                    expands: false,
-                    padding: EdgeInsets.all(20),
-                  ),
+            child: QuillLyrics(
+              controller: getQuillController(),
+            ),
           )
         ],
       ),
     );
+  }
+
+  QuillController getQuillController() {
+    return showChord
+        ? showEng
+            ? _chordLyricsEngController
+            : _chordLyricsController
+        : showEng
+            ? _lyricsEngController
+            : _lyricsController;
   }
 }

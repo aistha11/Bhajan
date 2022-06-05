@@ -34,7 +34,7 @@ class BhajanView extends StatelessWidget {
                 isThreeLine: true,
                 onTap: () {
                   Get.to(() => LyricsView(
-                        catId: '1',
+                        // catId: '1',
                         bhajan: bhajan,
                       ));
                 },

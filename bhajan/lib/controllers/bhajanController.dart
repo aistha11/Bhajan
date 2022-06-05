@@ -13,6 +13,35 @@ final Rx<List<Bhajan>> _bhajanList = Rx<List<Bhajan>>([]);
   final Rx<List<Bhajan>> _newSongsList = Rx<List<Bhajan>>([]);
   List<Bhajan> get newSongsList => _newSongsList.value;
 
+  Bhajan? getBhajanById(String id){
+    try {
+      return bhajanList.firstWhere((e) => e.id! == id);
+    } catch (e) {
+      return null;
+    }
+  }
+  Bhajan? getChorusById(String id){
+    try {
+      return chorusList.firstWhere((e) => e.id! == id);
+    } catch (e) {
+      return null;
+    }
+  }
+  Bhajan? getBalChorusById(String id){
+    try {
+      return balChorusList.firstWhere((e) => e.id! == id);
+    } catch (e) {
+      return null;
+    }
+  }
+  Bhajan? getNewSongsById(String id){
+    try {
+      return newSongsList.firstWhere((e) => e.id! == id);
+    } catch (e) {
+      return null;
+    }
+  }
+
   @override
   void onInit() {
     _bhajanList.bindStream(BhajanService.getBhajans());

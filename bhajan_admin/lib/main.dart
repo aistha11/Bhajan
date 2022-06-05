@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+
   if (!kIsWeb) {
     await Firebase.initializeApp();
   } else {
